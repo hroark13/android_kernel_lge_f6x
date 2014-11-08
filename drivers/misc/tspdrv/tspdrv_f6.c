@@ -39,7 +39,7 @@
 #include <linux/platform_device.h>
 #include <asm/uaccess.h>
 #include <asm/atomic.h>
-#include <tspdrv_f6.h>
+#include "tspdrv_f6.h"
 #include <linux/wakelock.h>
 
 static int g_nTimerPeriodMs = 5; /* 5ms timer by default. This variable could be used by the SPI.*/
@@ -49,9 +49,9 @@ static int g_nTimerPeriodMs = 5; /* 5ms timer by default. This variable could be
 static atomic_t g_bRuntimeRecord;
 #endif
 
-#include <ImmVibeSPI.c>
+#include "ImmVibeSPI.c"
 #if (defined(VIBE_DEBUG) && defined(VIBE_RECORD)) || defined(VIBE_RUNTIME_RECORD)
-#include <tspdrvRecorder.c>
+#include "tspdrvRecorder.c"
 #endif
 
 /* Device name and version information */
