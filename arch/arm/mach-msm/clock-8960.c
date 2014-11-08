@@ -5421,6 +5421,10 @@ static struct clk_lookup msm_clocks_8064[] = {
 	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-000d"),
 	#endif
 
+	#if defined (CONFIG_OV5693)
+	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-0040"),
+	#endif
+
 	#if defined (CONFIG_HI707)
 	CLK_LOOKUP("cam_clk",		cam1_clk.c, "4-0060"),
 	#elif defined (CONFIG_IMX119)
@@ -5806,6 +5810,10 @@ static struct clk_lookup msm_clocks_8960_common[] __initdata = {
 	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-0040"),
 	#elif defined (CONFIG_IMX111)
 	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-000d"),
+	#endif
+
+	#if defined (CONFIG_OV5693)
+	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-0040"),
 	#endif
 
 	#if defined (CONFIG_HI707)
@@ -6205,6 +6213,10 @@ static struct clk_lookup msm_clocks_8930[] = {
 	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-0040"),
 	#elif defined (CONFIG_IMX111)
 	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-000d"),
+	#endif
+
+	#if defined (CONFIG_OV5693)
+	CLK_LOOKUP("cam_clk",		cam0_clk.c, "4-0040"),
 	#endif
 	
 	#if defined (CONFIG_HI707)

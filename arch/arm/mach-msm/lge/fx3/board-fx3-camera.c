@@ -746,6 +746,16 @@ static struct camera_vreg_t msm_8930_back_cam_vreg[] = {
 #endif
 };
 
+/*                                                                                     */
+#if defined (CONFIG_OV5693)
+static struct camera_vreg_t msm_8930_ov5693_cam_vreg[] = {
+	{"cam1_vana", REG_LDO, 2850000, 2850000, 85600},  /* VANA(L9) : 2.8V */
+	{"cam1_vio", REG_VS, 0, 0, 0},  /* VDDIO(LVS2) : 1.8V */
+	{"cam1_vdig", REG_LDO, 1580000, 1600000, 100000},  /* VDIG(L17): 1.8V */
+};
+#endif
+/*                                                                                     */
+
 static struct camera_vreg_t msm_8930_front_cam_vreg[] = {
 /* LGE_CHANGE_S F6 Camera porting, 2013.02.07 hyunuk.park@lge.com */
 	#ifdef CONFIG_IMX119
@@ -1077,6 +1087,58 @@ static struct msm_camera_sensor_info msm_camera_sensor_s5k4e5ya_data = {
 };
 #endif  /* CONFIG_S5K4E5YA */
 
+/*                                                                                     */
+#ifdef CONFIG_OV5693
+static struct msm_camera_sensor_flash_data flash_ov5693 = {
+	.flash_type	= MSM_CAMERA_FLASH_LED,
+#ifdef CONFIG_LEDS_AS364X
+	.flash_src  = &led_flash_src,
+#endif
+};
+
+static struct msm_camera_csi_lane_params ov5693_csi_lane_params = {
+	.csi_lane_assign = 0xE4,
+	.csi_lane_mask = 0x3,
+};
+
+static struct msm_camera_sensor_platform_info sensor_board_info_ov5693 = {
+	.mount_angle	= 90,
+	.cam_vreg = msm_8930_ov5693_cam_vreg,
+	.num_vreg = ARRAY_SIZE(msm_8930_ov5693_cam_vreg),
+	.gpio_conf = &msm_8930_back_cam_gpio_conf,
+	.csi_lane_params = &ov5693_csi_lane_params,
+};
+
+/*                                                                          */
+#ifdef CONFIG_OV5693_EEPROM
+static struct i2c_board_info ov5693_eeprom_i2c_info = {
+	I2C_BOARD_INFO("ov5693_eeprom", 0x14), //                                                              
+};
+
+static struct msm_eeprom_info ov5693_eeprom_info = {
+	.board_info     = &ov5693_eeprom_i2c_info,
+	.bus_id         = MSM_8930_GSBI4_QUP_I2C_BUS_ID,
+};
+#endif
+/*                                                                          */
+
+static struct msm_camera_sensor_info msm_camera_sensor_ov5693_data = {
+	.sensor_name	= "ov5693",
+	.pdata	= &msm_camera_csi_device_data[0],
+	.flash_data	= &flash_ov5693,
+	//                                                                                                       
+	.sensor_platform_info = &sensor_board_info_ov5693,
+	.csi_if	= 1,
+	.camera_type = BACK_CAMERA_2D,
+	.actuator_info = &msm_act_main_cam_2_info,
+#ifdef CONFIG_OV5693_EEPROM // jrchoi need to check defconfig
+	.eeprom_info = &ov5693_eeprom_info, /*                                                                        */
+#endif
+	.sensor_type = BAYER_SENSOR,
+};
+#endif  /* CONFIG_OV5693 */
+/*                                                                                     */
+
 #ifdef CONFIG_HI707
 static struct msm_camera_sensor_flash_data flash_hi707 = {
 	.flash_type = MSM_CAMERA_FLASH_NONE
@@ -1209,6 +1271,19 @@ struct i2c_board_info msm8930_camera_i2c_boardinfo[] = {
 		.platform_data = &msm_camera_sensor_s5k4e5ya_data,
 	},
 #endif
+/*                                                                                     */
+#ifdef CONFIG_OV5693
+	{
+		//[jungryoul.choi] This address is just for register i2c board_info. It doesn't need to match with real slave addrese
+		// But it should be match with REGULATOR_SUPPLY("cam_xxx", "4-0040") in board_xxx_regulator.c
+		I2C_BOARD_INFO("ov5693", 0x20 << 1),
+		.platform_data = &msm_camera_sensor_ov5693_data,
+	},
+#endif
+/*                                                                                     */
+/*                                                                 */
+
+
 /* LGE_CHANGE_S L9II Camera bringup 2013-03-11 jinsang.yun@lge.com */
 #if defined (CONFIG_IMX111)
 	{

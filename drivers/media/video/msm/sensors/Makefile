@@ -19,6 +19,7 @@ obj-$(CONFIG_MSM_CAMERA_SENSOR) += msm_sensor_common.o msm_sensor.o msm_sensor_b
 #obj-$(CONFIG_VX6953) += vx6953.o
 # LGE_CHANGE
 obj-$(CONFIG_S5K4E5YA) += s5k4e5ya_v4l2.o
+obj-$(CONFIG_OV5693) += ov5693_v4l2.o
 obj-$(CONFIG_HI543) += hi543_v4l2.o
 obj-$(CONFIG_HI707) += hi707_v4l2.o
 obj-$(CONFIG_IMX111) += imx111.o

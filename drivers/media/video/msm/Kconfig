@@ -246,6 +246,18 @@ config S5K4E5YA
 	  It is a Bayer 5MP sensor with auto focus and it supports
 	  two mipi lanes, required for msm7x2xA platform.
 	  Say Y here if this is msm7x2xA variant platform.
+# LGE_CHANGE
+config OV5693
+	bool "Sensor Sensor OV5693 (Omnivision 5M)"
+	depends on MSM_CAMERA
+	default n
+	---help---
+	  Support for OV5693 omnivision sensor driver.
+	  It is a Bayer 5MP sensor with auto focus and it supports
+	  two mipi lanes, required for msm7x2xA platform.
+	  Say Y here if this is msm7x2xA variant platform.
+
+
 
 # LGE_CHANGE
 config HI707
@@ -382,6 +394,9 @@ config IMX091_EEPROM
 # LGE_CHANGE
 config S5K4E5YA_EEPROM
 	bool "S5K4E5YA EEPROM support"
+
+config OV5693_EEPROM
+        bool "OV5693 EEPROM support"
 
 config HI543_EEPROM
 	bool "HI543 EEPROM support"

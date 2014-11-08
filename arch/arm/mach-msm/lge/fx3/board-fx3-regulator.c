@@ -81,6 +81,10 @@ VREG_CONSUMERS(L9) = {
 	REGULATOR_SUPPLY("cam_vana",		"4-0040"),	/* LGE_CHANGED, board bringup main-cam for ATT, 2012-11-16, kwangsik83.kim@lge.com */
 	REGULATOR_SUPPLY("cam_vana",		"4-0020"),	/* LGE_CHANGED, board bringup main-cam for sprint, 2012-09-19, kwangsik83.kim@lge.com */
 #endif
+#if defined (CONFIG_OV5693)
+	REGULATOR_SUPPLY("cam1_vana",		"4-0040"),
+#endif
+
 
 #if defined (CONFIG_IMX119)
 	REGULATOR_SUPPLY("cam_vana",        "4-006e"), /* LGE_CHANGED F6 Camera porting, 2013.02.07 hyunuk.park@lge.com */
@@ -161,6 +165,10 @@ VREG_CONSUMERS(L17) = {
 	REGULATOR_SUPPLY("cam_vdig",            "4-0040"),	/* LGE_CHANGED, board bringup main-cam for att, 2012-11-16, kwangsik83.kim@lge.com */
 	REGULATOR_SUPPLY("cam_vdig",            "4-0060"),	/* LGE_CHANGED, board bringup vt-cam for sprint, 2012-09-19, kwangsik83.kim@lge.com */
 	REGULATOR_SUPPLY("cam_vdig",            "4-0020"),	/* LGE_CHANGED, board bringup main-cam for sprint, 2012-09-19, kwangsik83.kim@lge.com */
+#if defined(CONFIG_OV5693)
+	REGULATOR_SUPPLY("cam1_vdig",            "4-0040"),	/* LGE_CHANGED, board bringup main-cam for att, 2012-11-16, kwangsik83.kim@lge.com */
+#endif
+
 	REGULATOR_SUPPLY("8038_l17",		NULL),
 };
 VREG_CONSUMERS(L18) = {
@@ -260,6 +268,11 @@ VREG_CONSUMERS(LVS2) = {
 	REGULATOR_SUPPLY("cam_vio",             "4-0040"),	/* LGE_CHANGED, board bringup main-cam for ATT, 2012-11-16, kwangsik83.kim@lge.com */
 	REGULATOR_SUPPLY("cam_vio",             "4-0020"),	/* LGE_CHANGED, board bringup main-cam for sprint, 2012-09-19, kwangsik83.kim@lge.com */
 #endif
+
+#if defined (CONFIG_OV5693)
+	REGULATOR_SUPPLY("cam1_vio",             "4-0040"),	/* LGE_CHANGED, board bringup main-cam for ATT, 2012-11-16, kwangsik83.kim@lge.com */
+#endif
+
 #if defined (CONFIG_IMX119)
 	REGULATOR_SUPPLY("cam_vio",             "4-006e"), /* LGE_CHANGED F6 Camera porting, 2013.02.07 hyunuk.park@lge.com */
 #else	
