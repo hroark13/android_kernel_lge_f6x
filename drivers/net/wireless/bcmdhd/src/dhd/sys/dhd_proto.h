@@ -4,7 +4,7 @@
  * Provides type definitions and function prototypes used to link the
  * DHD OS, bus, and protocol modules.
  *
- * Copyright (C) 1999-2014, Broadcom Corporation
+ * Copyright (C) 1999-2012, Broadcom Corporation
  * 
  *      Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
@@ -24,7 +24,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
- * $Id: dhd_proto.h 459336 2014-03-03 07:09:45Z $
+ * $Id: dhd_proto.h 343390 2012-07-06 22:34:19Z $
  */
 
 #ifndef _dhd_proto_h_
@@ -36,10 +36,6 @@
 #ifndef IOCTL_RESP_TIMEOUT
 #define IOCTL_RESP_TIMEOUT  2000  /* In milli second default value for Production FW */
 #endif /* IOCTL_RESP_TIMEOUT */
-
-#ifndef MFG_IOCTL_RESP_TIMEOUT
-#define MFG_IOCTL_RESP_TIMEOUT  20000  /* In milli second default value for MFG FW */
-#endif /* MFG_IOCTL_RESP_TIMEOUT */
 
 /*
  * Exported from the dhd protocol module (dhd_cdc, dhd_rndis)
@@ -58,6 +54,10 @@ extern int dhd_prot_init(dhd_pub_t *dhdp);
 
 /* Stop protocol: sync w/dongle state. */
 extern void dhd_prot_stop(dhd_pub_t *dhdp);
+#ifdef PROP_TXSTATUS
+extern int dhd_wlfc_init(dhd_pub_t *dhd);
+extern void dhd_wlfc_deinit(dhd_pub_t *dhd);
+#endif /* PROP_TXSTATUS */
 
 /* Add any protocol-specific data header.
  * Caller must reserve prot_hdrlen prepend space.
@@ -87,6 +87,12 @@ extern int dhd_ioctl(dhd_pub_t * dhd_pub, dhd_ioctl_t *ioc, void * buf, uint buf
 
 extern int dhd_preinit_ioctls(dhd_pub_t *dhd);
 
+#ifdef PROP_TXSTATUS
+extern int dhd_wlfc_enque_sendq(void* state, int prec, void* p);
+extern int dhd_wlfc_commit_packets(void* state, f_commitpkt_t fcommit, void* commit_ctx);
+extern void dhd_wlfc_cleanup(dhd_pub_t *dhd);
+#endif /* PROP_TXSTATUS */
+
 extern int dhd_process_pkt_reorder_info(dhd_pub_t *dhd, uchar *reorder_info_buf,
 	uint reorder_info_len, void **pkt, uint32 *free_buf_count);
 
@@ -98,6 +104,8 @@ extern int dhd_process_pkt_reorder_info(dhd_pub_t *dhd, uchar *reorder_info_buf,
 #define DHD_PROTOCOL "bdc"
 #elif defined(CDC)
 #define DHD_PROTOCOL "cdc"
+#elif defined(RNDIS)
+#define DHD_PROTOCOL "rndis"
 #else
 #define DHD_PROTOCOL "unknown"
 #endif /* proto */
